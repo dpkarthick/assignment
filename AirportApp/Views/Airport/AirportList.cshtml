@@ -1,0 +1,37 @@
+﻿
+@model AirportApp.Models.AirportDetails
+
+@{
+    List<string> listItems = Model.AirportDetailsList.Select(x => x.name).Where(y => y != null).ToList();
+    SelectList SelectList = new SelectList(Model.CountryList.OrderBy(x => x.Value), "Key", "Value");
+}
+
+<br />
+<br />
+<b>Country:&nbsp;&nbsp;</b>@Html.DropDownList("Country",
+SelectList, new { @class = "btn btn-primary dropdown-toggle" })
+
+&nbsp;&nbsp;<b>Source:&nbsp;&nbsp;</b>@Html.DropDownList("Source",
+new SelectList(listItems), new { @class = "btn btn-primary dropdown-toggle" })
+
+&nbsp;&nbsp;<b>Destination:&nbsp;&nbsp;</b>@Html.DropDownList("Destination",
+new SelectList(listItems),new { @class= "btn btn-primary dropdown-toggle" })
+
+<input type="button" value="Find Distance" id="FindDistance" class="btn-success" />
+<h1 id="Distance"> </h1>
+<h1> European Airport Details</h1>
+<div id="CountryList">
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var country in Model.AirportDetailsList)
+            {
+                if (country != null && !string.IsNullOrEmpty(country.name))
+                {
+                    <div class="col-sm-4">
+                        @country.name
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
